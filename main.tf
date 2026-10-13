@@ -1,3 +1,10 @@
+terraform {
+  backend "s3" {
+    bucket = "github-actions-test-bucket-fr"
+    key    = "github-actions-rds/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
 # Provider Configuration
 # Specifies the AWS provider and region for Terraform to manage resources in.
 provider "aws" {
