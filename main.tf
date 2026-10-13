@@ -186,7 +186,7 @@ resource "aws_db_instance" "wordpress_db" {
   instance_class       = "db.t3.micro"  # Free tier eligible instance type
   db_name              = "wordpressdb"  # Name of the WordPress database
   username             = "admin"  # Database admin username
-  password             = "pass123"  # Replace with a secure password
+  password             = "password1234"  # Replace with a secure password
   parameter_group_name = "default.mysql8.0"  # Default parameter group for MySQL 8.0
   skip_final_snapshot  = true  # Skip final snapshot when destroying the database
   vpc_security_group_ids = [aws_security_group.rds_sg.id]  # Attach the RDS security group
