@@ -141,10 +141,15 @@ resource "aws_instance" "wordpress_ec2" {
   instance_type          = "t2.micro"  # Free tier eligible instance type
   subnet_id              = aws_subnet.public_subnet.id  # Place in the public subnet
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]  # Attach the EC2 security group
-  key_name               = "your-key-name"  # Replace with your SSH key pair name
+  key_name               = "MZ_AWS_KEY"  # Replace with your SSH key pair name
 
   # TODO: Pass in the 4 variables to the user data script
-  user_data = "${file("wp_rds_install.sh")}"   
+  user_data = templatefile("wp_rds_install.sh", {
+    db_name     = aws_db_instance.wordpress_db.db_name
+    db_username = aws_db_instance.wordpress_db.username
+    db_password = aws_db_instance.wordpress_db.password
+    db_host     = aws_db_instance.wordpress_db.address
+  })  
 
   tags = {
     Name = "WordPress EC2 Instance"
@@ -174,7 +179,7 @@ resource "aws_db_instance" "wordpress_db" {
   instance_class       = "db.t3.micro"  # Free tier eligible instance type
   db_name              = "wordpressdb"  # Name of the WordPress database
   username             = "admin"  # Database admin username
-  password             = "your-secure-password"  # Replace with a secure password
+  password             = "pass123"  # Replace with a secure password
   parameter_group_name = "default.mysql8.0"  # Default parameter group for MySQL 8.0
   skip_final_snapshot  = true  # Skip final snapshot when destroying the database
   vpc_security_group_ids = [aws_security_group.rds_sg.id]  # Attach the RDS security group
