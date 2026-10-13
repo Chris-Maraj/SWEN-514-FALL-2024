@@ -5,7 +5,7 @@ provider "aws" {
 
 # Local variables block for configuration values
 locals {
-    aws_key = "MZ_AWS_KEY.pem"   # SSH key pair name for EC2 instance access
+    aws_key = "MZ_AWS_KEY"   # SSH key pair name for EC2 instance access
 }
 
 # EC2 instance resource definition
